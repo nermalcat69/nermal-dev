@@ -6,7 +6,7 @@ const robotsTxt = isProd
   ? `User-agent: *
 Allow: /
 
-Sitemap: https://orm.drizzle.team/sitemap-index.xml`
+Sitemap: https://nermal.dev/sitemap-index.xml`
   : `User-agent: *
 Disallow: /`;
 

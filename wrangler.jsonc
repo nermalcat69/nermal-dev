@@ -2,6 +2,8 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "nermal-dev",
   "compatibility_date": "2026-09-20",
+  // nermal.dev must be a zone on this Cloudflare account
+  "routes": [{ "pattern": "nermal.dev", "custom_domain": true }],
   // static site: astro builds to dist/ (format "file" -> foo.html), public/_redirects is honored
   "assets": {
     "directory": "./dist",
