@@ -1,3 +1,25 @@
+# Nermal
+
+Landing page and docs site for [Nermal](https://github.com/nermalcat69/nermal-ide), a terminal workbench with a built-in editor: persistent sessions, remote work, and AI agent support. Built with Astro; forked from Drizzle's docs site.
+
+## Develop
+
+```sh
+pnpm install
+pnpm dev
+```
+
+## Deploy (Cloudflare Workers static assets)
+
+`wrangler.jsonc` serves the static `dist/` build, including `public/_redirects`.
+
+```sh
+pnpm exec wrangler login   # once
+pnpm deploy                # PROD_BUILD=true build, then wrangler deploy
+```
+
+Or connect the repo in Cloudflare (Workers Builds) with build command `PROD_BUILD=true pnpm build` and deploy command `pnpm exec wrangler deploy`.
+
 ## 🚀 Project Structure
 
 MDX files are located in this folder:
