@@ -5,8 +5,8 @@ Landing page and docs site for [Nermal](https://github.com/nermalcat69/nermal-id
 ## Develop
 
 ```sh
-pnpm install
-pnpm dev
+bun install
+bun dev
 ```
 
 ## Deploy (Cloudflare Workers static assets)
@@ -14,11 +14,11 @@ pnpm dev
 `wrangler.jsonc` serves the static `dist/` build, including `public/_redirects`.
 
 ```sh
-pnpm exec wrangler login   # once
-pnpm deploy                # PROD_BUILD=true build, then wrangler deploy
+bunx wrangler login   # once
+bun run deploy             # PROD_BUILD=true build, then wrangler deploy
 ```
 
-Or connect the repo in Cloudflare (Workers Builds) with build command `PROD_BUILD=true pnpm build` and deploy command `pnpm exec wrangler deploy`.
+Or connect the repo in Cloudflare (Workers Builds) with build command `PROD_BUILD=true bun run build` and deploy command `bunx wrangler deploy`.
 
 ## 🚀 Project Structure
 
@@ -70,9 +70,9 @@ All commands are run from the root of the project, from a terminal:
 
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm run dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm run build`           | Build your production site to `./dist/`          |
-| `pnpm run preview`         | Preview your build locally, before deploying     |
-| `pnpm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm run astro -- --help` | Get help using the Astro CLI                     |
+| `bun install`             | Installs dependencies                            |
+| `bun run dev`             | Starts local dev server at `localhost:4321`      |
+| `bun run build`           | Build your production site to `./dist/`          |
+| `bun run preview`         | Preview your build locally, before deploying     |
+| `bun run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `bun run astro -- --help` | Get help using the Astro CLI                     |

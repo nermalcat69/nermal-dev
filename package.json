@@ -3,11 +3,10 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "dev": "astro dev --host",
     "build": "astro check && NODE_OPTIONS=--max-old-space-size=8192 astro build",
     "preview": "astro preview",
-    "deploy": "PROD_BUILD=true pnpm build && wrangler deploy",
+    "deploy": "PROD_BUILD=true bun run build && wrangler deploy",
     "test": "vitest run"
   },
   "dependencies": {
@@ -54,5 +53,10 @@
     "vite": "^5.4.10",
     "vitest": "^2.1.4",
     "wrangler": "^4.135.0"
-  }
+  },
+  "trustedDependencies": [
+    "@parcel/watcher",
+    "esbuild",
+    "sharp"
+  ]
 }
