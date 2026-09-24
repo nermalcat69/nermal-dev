@@ -1,78 +1,36 @@
-# Nermal
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Landing page and docs site for [Nermal](https://github.com/nermalcat69/nermal-ide), a terminal workbench with a built-in editor: persistent sessions, remote work, and AI agent support. Built with Astro; forked from Drizzle's docs site.
+## Getting Started
 
-## Develop
+First, run the development server:
 
-```sh
-bun install
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
 bun dev
 ```
 
-## Deploy (Cloudflare Workers static assets)
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-`wrangler.jsonc` serves the static `dist/` build, including `public/_redirects`.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-```sh
-bunx wrangler login   # once
-bun run deploy             # PROD_BUILD=true build, then wrangler deploy
-```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-Or connect the repo in Cloudflare (Workers Builds) with build command `PROD_BUILD=true bun run build` and deploy command `bunx wrangler deploy`.
+## Learn More
 
-## 🚀 Project Structure
+To learn more about Next.js, take a look at the following resources:
 
-MDX files are located in this folder:
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-```text
-├── src/
-│   ├── content/
-│   │   └── docs
-```
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-Announcements markdown files:
+## Deploy on Vercel
 
-```text
-├── src/
-│   ├──data/
-│   │   └── announcements
-```
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Roadmap markdown file:
-
-```text
-├── src/
-│   ├──data/
-│   │   └── roadmap.md
-```
-
-Shipping section yaml file:
-
-```text
-├── src/
-│   ├──data/
-│   │   └── shipping.yaml
-```
-
-```
-progress: number
-weeks:
-  - date:
-      start: "YYYY-MM-DD"
-    details:
-      - string
-```
-
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun run dev`             | Starts local dev server at `localhost:4321`      |
-| `bun run build`           | Build your production site to `./dist/`          |
-| `bun run preview`         | Preview your build locally, before deploying     |
-| `bun run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun run astro -- --help` | Get help using the Astro CLI                     |
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
