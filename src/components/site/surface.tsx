@@ -45,10 +45,13 @@ export function Eyebrow({ className, children }: { className?: string; children:
 }
 
 const titleSizes = {
+  // Leading tightens as size grows, but never past the point where a descender
+  // on line one collides with an ascender on line two. hero and section share
+  // 1.08 so the two display sizes read as one scale rather than two defaults.
   hero: "mt-4 max-w-[18ch] text-[34px] leading-[1.08] font-normal tracking-[-0.035em] text-balance sm:text-[52px] lg:text-[64px]",
   section:
-    "max-w-[16ch] text-[36px] leading-[1.05] font-medium tracking-[-0.035em] text-balance sm:text-[52px] lg:text-[60px]",
-  card: "text-[24px] leading-[30px] font-medium tracking-[-0.025em] text-balance",
+    "max-w-[16ch] text-[36px] leading-[1.08] font-medium tracking-[-0.035em] text-balance sm:text-[52px] lg:text-[60px]",
+  card: "text-[24px] leading-[1.2] font-medium tracking-[-0.025em] text-balance",
 } as const;
 
 /** Shared title scale so headings align visually site-wide. */
@@ -66,9 +69,24 @@ export function SectionTitle({
   return <Tag className={cn(titleSizes[size], className)}>{children}</Tag>;
 }
 
-/** Shared body copy scale. Never uses text-balance (keeps rag natural + fast). */
+/**
+ * Shared body copy scale.
+ *
+ * `text-pretty` is the running-text counterpart to `text-balance` on the
+ * headings: it keeps a paragraph off a single-word last line, which is the
+ * orphan that reads as a mistake. `max-w-[62ch]` caps the measure so copy in a
+ * wide card still lands near the 60-70 character range the eye reads without
+ * effort; narrower callers override it.
+ *
+ * The top margin is the gap under a heading. 12px was too tight beneath 52-60px
+ * display type, which is why the display sections pass their own `mt-5`.
+ */
 export function Body({ className, children }: { className?: string; children: ReactNode }) {
-  return <div className={cn("mt-3 space-y-3 text-[15px] leading-[22.5px]", className)}>{children}</div>;
+  return (
+    <div className={cn("mt-4 max-w-[62ch] space-y-3 text-[15px] leading-[22.5px] text-pretty", className)}>
+      {children}
+    </div>
+  );
 }
 
 const cardTones = {

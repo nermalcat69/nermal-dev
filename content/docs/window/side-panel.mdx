@@ -1,0 +1,103 @@
+---
+title: "The side panel"
+description: "Info, Source Control, and Files — plus the built-in editor."
+---
+
+<kbd>⌘ J</kbd> opens a panel on the right of the window with three tabs. It is
+hidden by default; whichever tab you leave it on is where it opens next time.
+
+The three icons at the top switch tabs, and clicking the lit one puts the panel
+away again.
+
+<Frame caption="Placeholder — screenshot: the side panel showing the Info tab beside a terminal">
+  <img src="/images/placeholder.svg" alt="The nermal side panel" />
+</Frame>
+
+## Info
+
+Everything nermal knows about the focused pane, in one column:
+
+| Section | What it shows |
+|---|---|
+| **Session** | working directory, shell, SSH connection, git branch, `+N −M` changes, and the coding agent with its status (idle / working / waiting / done) |
+| **Processes** | the process tree inside the pane, with the foreground process marked |
+| **Ports** | every port those processes are listening on |
+
+Hovering a row shows what it can do at the right-hand end of it: **Copy** on the
+working directory, the SSH host and the branch, and **Reveal in Finder** / **Open
+Folder** alongside it on a working directory this machine can see. The `+N −M`
+counts open the [diff overlay](/git/diffs), the same click the sidebar's counts
+answer to — and the same **Settings → Window & Tabs → Open diff preview from
+sidebar counts** turns both of them back into plain text.
+
+The ports section is the quickest answer to "what is this pane serving, and
+where" — the same data `nermal procs` prints. A port row copies `localhost:PORT`,
+and on a local pane opens it in your browser.
+
+## Source Control
+
+The git panel for the focused pane's repository, in four groups — **Merge
+Changes**, **Staged Changes**, **Changes**, **Untracked**. Write a message,
+commit, and push without leaving the window.
+
+[Source control →](/git/source-control)
+
+## Files
+
+A file tree rooted at the pane's working directory, with git status decorations
+on every row and a search box at the top. The search box carries a clear button
+while there is something in it.
+
+- **Click a file** to open it in the built-in editor.
+- **Drag a file out** to Finder or Explorer to copy it there.
+- **Drag files in** from the desktop to copy them into the folder under the
+  cursor. A folder row takes them itself, a file row stands in for the folder
+  holding it, and the empty space below the tree means the top of it. Folders
+  come in whole, the executable bit survives, and a name that is already taken
+  is asked about rather than replaced.
+
+Both directions work over a [remote workspace](/remote/workspaces) too, reading
+on one machine and writing on the other, up to the size one control frame can
+carry — past that the panel tells you to use [SFTP](/remote/sftp).
+
+## The editor
+
+<kbd>⌘ ⇧ E</kbd> toggles the code panel; clicking a file in the Files tab opens
+it there. It is a real editor — syntax highlighting, line and column readout,
+wrap toggle, and a Markdown preview — meant for the edit you would otherwise
+have opened `vim` for.
+
+| | |
+|---|---|
+| <kbd>⌘ S</kbd> | Save |
+| <kbd>Esc</kbd> | Back to the terminal |
+
+Files are watched on disk: a change underneath you is picked up, and closing
+with unsaved edits asks before discarding them. Files over 4 MB and anything
+that looks binary are refused with a note rather than opened badly.
+
+### Where it opens
+
+The editor docks beside the terminal, taking half the space between the sidebar
+and the right panel. The terminal keeps running, stays visible, and stays
+typeable — click it, read what your agent said, click back. Diffs open in the
+same column.
+
+Drag the divider for any width between a fifth and four fifths of that space —
+the range `document_ratio` keeps — or double-click it to cycle a third, a half
+and two thirds. **Document: Third / Half / Two-Thirds Width** in the command
+palette do the same. On a narrow window the terminal's own floor stops the
+divider sooner.
+
+Right-click the document's header for **Fill window**, which is the old
+full-workspace overlay, unchanged. **Document: Fill Window** and **Document:
+Dock Beside Terminal** in the palette are the same switch.
+
+Fill or dock is **per tab**: read a long file over the whole window in one tab
+while an agent keeps half of another, and neither moves the other. A fresh tab
+starts from `document_layout` in `config.json`. The width is shared, and
+persists as `document_ratio`.
+
+A window too narrow to give both the terminal and the document a readable width
+fills for that file only — widen it and the column comes back, without your
+setting having changed.

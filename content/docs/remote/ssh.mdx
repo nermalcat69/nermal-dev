@@ -1,0 +1,214 @@
+---
+title: "SSH"
+description: "A native Rust SSH stack: quick connects, saved profiles, keychain credentials, jump hosts."
+---
+
+nermal speaks SSH itself, over [russh](https://github.com/Eugeny/russh). It never
+shells out to the `ssh` binary, and there is no compatibility mode that does.
+
+That is what makes the rest possible: credentials in the OS keychain,
+[SFTP](/remote/sftp) in a side panel, [port forwards](/remote/port-forwarding)
+you can add mid-session, and authentication prompts drawn as sheets in the pane
+instead of a password echoing into your shell.
+
+<Frame caption="Placeholder — screenshot: an SSH connection sheet asking for a key passphrase inside a pane">
+  <img src="/images/placeholder.svg" alt="Connecting over SSH in nermal" />
+</Frame>
+
+## Four ways to connect
+
+<AccordionGroup>
+  <Accordion title="QuickConnect — type an address">
+    Open the palette (<kbd>⌘ P</kbd>) and type an address. IPv6 works with
+    brackets.
+
+    ```
+    me@devbox
+    me@devbox:2222
+    me@[2001:db8::1]:22
+    ```
+  </Accordion>
+
+  <Accordion title="A saved profile">
+    Profiles live in **Settings → SSH → Hosts**. Start typing the name in the
+    palette, or open the *SSH: Manage Profiles…* command.
+  </Accordion>
+
+  <Accordion title="An alias from ~/.ssh/config">
+    Type an alias you already have and nermal resolves it natively — common fields,
+    best effort — then connects over russh. **Settings → SSH → Import from
+    ~/.ssh/config** turns aliases into real profiles.
+
+    <Note>
+      `Match`, `canonicalize*`, and GSSAPI directives are not supported, and
+      there is no fallback to the system `ssh` when one appears.
+    </Note>
+  </Accordion>
+
+  <Accordion title="A remote workspace">
+    The same connection can host whole workspaces on the far machine rather than
+    a single shell. [Remote workspaces →](/remote/workspaces)
+  </Accordion>
+</AccordionGroup>
+
+## Profiles
+
+**Settings → SSH → Hosts** holds the full connection config. The basics:
+
+| Field | |
+|---|---|
+| **Name** | A label for this connection |
+| **Host** | Hostname or IP |
+| **User** | Login user — blank resolves at connect time |
+| **Auth** | *Auto* (tries every applicable method), *GSSAPI*, *Password*, *Key*, *Agent*, or *2FA* |
+| **Jump host** | Another profile, or a `ProxyJump` chain |
+| **Port forwarding** | Rules opened with the connection |
+
+**Defaults** at the top of the list is inherited by every host, so a setting you
+want everywhere is set once.
+
+Right-clicking an SSH tab opens that connection's host form — **Edit Host…**
+for a saved one, **Save as SSH Host…** for an address typed by hand. It is the
+same row the workspace switcher's machine menu carries, so a hostname or
+password typed wrong is corrected from the tab you noticed it on. The menu acts
+on the tab it was opened on, not on whichever pane is focused. Saving one opens
+on the whole live connection — its proxy, keys and forwards as well as its
+address — so the host that lands is the one you were already on.
+
+Passwords and key passphrases go in the **OS keychain**, never in
+`config.json` and never on disk in plain text. **Forget Password** in a
+profile's menu removes the stored one.
+
+Deleting a profile drops its keychain credentials and forgets the remote
+workspace entries that connected through it — the confirmation counts them
+first. The sessions on the machine itself keep running; [what happens to its
+entries →](/remote/workspaces#deleting-a-profile)
+
+### Advanced
+
+Behind **Advanced** on a profile, grouped:
+
+| Group | Fields |
+|---|---|
+| **Authentication** | Identity files (one path per line, `%h`/`%r` expand), agent forwarding |
+| **Proxies** | ProxyCommand (`%h`/`%p`/`%r` substituted), SOCKS5 proxy, HTTP proxy |
+| **Algorithms** | KEX algorithms, ciphers, MACs, host-key algorithms, compression |
+| **Connection** | Keepalive interval and count, connect timeout, X11 forwarding |
+| **Session** | Shell integration, login scripts, skip banner |
+| **Security** | Host-key verification, remote clipboard image writes |
+
+Everything blank means "the library default", so you only fill in what you
+actually need to override.
+
+## Copying a remote image to this machine
+
+Programs on an SSH host can write PNG, JPEG, GIF, or WebP images to the system
+clipboard on the machine running nermal with the OSC 5522 clipboard protocol.
+Enable **Advanced → Security → Remote clipboard images** for that saved host
+first. It is off by default because any program that writes terminal output
+would otherwise be able to replace the clipboard.
+
+This Python script can be installed on the remote host as
+`nermal-copy-image`:
+
+```python
+#!/usr/bin/env python3
+import base64
+import os
+import pathlib
+import re
+import select
+import secrets
+import sys
+import termios
+import time
+import tty
+
+path = pathlib.Path(sys.argv[1])
+mime = {
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".gif": "image/gif",
+    ".webp": "image/webp",
+}.get(path.suffix.lower())
+if mime is None:
+    raise SystemExit("supported formats: png, jpg, jpeg, gif, webp")
+
+data = path.read_bytes()
+if len(data) > 16 * 1024 * 1024:
+    raise SystemExit("image exceeds nermal's 16 MiB clipboard limit")
+
+osc, st = b"\x1b]5522;", b"\x1b\\"
+encoded_mime = base64.b64encode(mime.encode())
+request_id = secrets.token_hex(8)
+out = sys.stdout.buffer
+fd = sys.stdin.fileno()
+old = termios.tcgetattr(fd)
+status = None
+try:
+    tty.setraw(fd)
+    rid = request_id.encode()
+    out.write(osc + b"type=write:id=" + rid + st)
+    for offset in range(0, len(data), 4096):
+        chunk = base64.b64encode(data[offset:offset + 4096])
+        out.write(
+            osc + b"type=wdata:id=" + rid + b":mime=" + encoded_mime + b";" + chunk + st
+        )
+    out.write(osc + b"type=wdata:id=" + rid + st)
+    out.flush()
+
+    reply = bytearray()
+    pattern = re.compile(
+        rb"\x1b\]5522;type=write:status=([A-Z]+):id=" + rid + rb"\x1b\\"
+    )
+    deadline = time.monotonic() + 5
+    while time.monotonic() < deadline:
+        ready, _, _ = select.select([fd], [], [], deadline - time.monotonic())
+        if not ready:
+            break
+        reply.extend(os.read(fd, 4096))
+        match = pattern.search(reply)
+        if match:
+            status = match.group(1).decode()
+            break
+finally:
+    termios.tcsetattr(fd, termios.TCSADRAIN, old)
+
+if status != "DONE":
+    raise SystemExit(f"clipboard write failed: {status or 'timeout'}")
+```
+
+Run `nermal-copy-image screenshot.png`. A compliant sender may include an OSC
+5522 request id and wait for nermal's `DONE`, `EPERM`, `EINVAL`, or `ENOSYS`
+response. Clipboard control packets are not retained in scrollback and are not
+replayed after reconnecting.
+
+## Authentication prompts
+
+Password, key passphrase, and 2FA prompts appear as sheets inside the pane, with
+a **Remember (keychain)** option where it makes sense.
+
+## Host keys
+
+Host keys are verified against `known_hosts` by default. A first connection asks
+you to confirm the fingerprint; a **changed** key is a much louder prompt that
+makes you type `yes` to override, because that is what a changed key deserves.
+
+**Settings → SSH → Security → Verify host keys** turns verification off
+entirely. It is on for a reason.
+
+Also under Security: **Warn before closing** a live connection, off by default.
+
+## Reconnecting
+
+<kbd>⌘ ⇧ R</kbd> — or *SSH: Reconnect* in the palette — restarts the session in
+the current pane. Useful after a laptop sleeps or a network changes.
+
+## What is not supported
+
+- No fallback to the system `ssh` binary
+- No `Match` or `canonicalize*` directives from `~/.ssh/config`
+- No GSSAPI *directives* from `~/.ssh/config`. Kerberos `gssapi-with-mic` itself
+  is supported — pick **GSSAPI** in a profile's Auth field — it is just not
+  something the config-file resolution path reads

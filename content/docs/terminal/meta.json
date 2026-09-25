@@ -1,0 +1,4 @@
+{
+  "title": "The terminal",
+  "pages": ["prompt", "history", "selection-and-clipboard", "links", "mouse-and-scrolling"]
+}

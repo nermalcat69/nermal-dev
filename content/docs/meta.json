@@ -1,0 +1,16 @@
+{
+  "title": "nermal",
+  "description": "A terminal workbench: persistent sessions, remote work, agents.",
+  "pages": [
+    "index",
+    "getting-started",
+    "window",
+    "terminal",
+    "agents",
+    "remote",
+    "git",
+    "customization",
+    "cli",
+    "reference"
+  ]
+}

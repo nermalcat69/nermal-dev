@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { RepoStats } from "@/lib/github";
 import { agents } from "@/lib/links";
 import { Reveal } from "@/components/site/reveal";
+import { SponsorsWall } from "@/components/site/sponsors";
 import { Container, SectionTitle } from "@/components/site/surface";
 
 function formatCount(value: number) {
@@ -47,6 +48,7 @@ export function Trust({ stats }: { stats: RepoStats }) {
               </li>
             ))}
           </ul>
+          <SponsorsWall />
         </Reveal>
       </Container>
     </section>

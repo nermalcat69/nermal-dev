@@ -236,3 +236,5 @@
     transform: none;
   }
 }
+@import 'fumadocs-ui/css/shadcn.css';
+@import 'fumadocs-ui/css/preset.css';

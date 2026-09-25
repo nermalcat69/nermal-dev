@@ -1,6 +1,7 @@
 import { Logo } from "@/components/site/logo";
 import { PillLink } from "@/components/site/pill-link";
 import { Reveal } from "@/components/site/reveal";
+import { SponsorsFooter } from "@/components/site/sponsors";
 import { Body, Container, SectionTitle } from "@/components/site/surface";
 import { links } from "@/lib/links";
 
@@ -63,6 +64,7 @@ export function Closing() {
       </Container>
 
       <Container as="footer" className="pt-16 pb-10 md:pt-24">
+        <SponsorsFooter />
         <nav aria-label="Footer" className="grid grid-cols-2 gap-10 border-t border-black/10 pt-10 sm:grid-cols-4">
           {columns.map((column) => (
             <div key={column.title}>

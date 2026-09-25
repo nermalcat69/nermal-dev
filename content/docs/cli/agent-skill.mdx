@@ -1,0 +1,107 @@
+---
+title: "The agent skill"
+description: "Teaching a coding agent to use nermal properly — including when not to."
+---
+
+The CLI is only half of the story. An agent has to know *when* reaching for a
+pane beats running a command, and — more importantly — which panes it must not
+touch. That is what the skill is for.
+
+## Installing it
+
+```bash
+npx skills add nermalcat69/nermal-ide
+```
+
+The source lives at
+[`skills/nermal/`](https://github.com/nermalcat69/nermal-ide/tree/main/skills/nermal) in the
+repository: a `SKILL.md` and two references — the full command table, and a
+delegation playbook the agent reads before handing work to another agent.
+
+<Note>
+  This is the only skill nermal has — nothing in **Settings → Agents** installs
+  one for you. Using the CLI to run *other* agents — a worker pane, `nermal wait`,
+  collecting the result — is covered separately.
+  [Orchestration →](/agents/orchestration)
+</Note>
+
+## Updating it
+
+`add` does not refresh a skill that is already installed — updating is its own
+command, and the skill is named `nermal`:
+
+```bash
+npx skills update nermal    # this one
+npx skills update         # everything you have installed
+```
+
+The CLI records where each skill came from, so `update` re-downloads only what
+has drifted. `npx skills remove nermal` takes it back out.
+
+## What it teaches
+
+### When to use a pane instead of a plain command
+
+The Bash-style tool an agent already has is right for anything that starts, does
+its job, and exits. A pane is right when:
+
+- **It should not block.** A dev server, a watcher, `tail -f`, a long test run.
+- **It is interactive or stateful.** A REPL, `ssh`, a database shell — anything
+  where you send, read, then send again. A pane keeps the session alive between
+  turns; a one-shot call cannot.
+- **It needs a real TTY.** Programs that detect a pipe and change behaviour —
+  colour, progress bars, TUIs, `top`, raw mode.
+- **The user should be able to watch.** Anything in a pane shows up live in
+  their window. That is often the whole point.
+- **You are being asked about something you did not start.** "What's running in
+  that pane?", "why is port 3000 taken?", "what are my agents doing?"
+
+### The safety rules
+
+<Warning>
+  The panes on this machine are the user's real work, and some of them are other
+  coding agents mid-task. Anything the agent did not create is read-only.
+</Warning>
+
+- **Never `send` into a pane you did not open.** Keystrokes land in the middle
+  of whatever is happening there. Check `nermal agents` first.
+- **Never close a pane, tab, or workspace you did not create.**
+- **Never `server stop` or `server restart`.** Every pane on the machine dies
+  with the server, including yours.
+- **Never `nermal server start` on your own initiative** when `doctor` says the
+  server is unreachable — starting one the user did not ask for changes what
+  their GUI attaches to. Tell them instead.
+- **Clean up what you did create.** `nermal pane close %83` when the scratch pane
+  is done with.
+
+### The reliable idioms
+
+Rather than screen-scraping, the skill points agents at the primitives that
+actually answer the question:
+
+```bash
+# is it finished? — when only the depth-0 shell is left, yes
+nermal procs %83 --json
+
+# the answer, not the view
+nermal send "$PANE" 'cargo test > /tmp/t.log 2>&1; echo $? > /tmp/t.rc' --enter
+
+# wake up exactly when the other agent needs something
+nermal wait %3 --until waiting,done --changed --timeout 600
+```
+
+### How to delegate
+
+`references/delegation.md` is the part the agent reads before spawning a
+worker: give the worker its own git worktree and workspace, hand the task over
+in interactive mode with the delivery contract in the prompt, prove the
+command actually started, babysit with `nermal wait`, collect the result out of
+git rather than the screen, clean up — and, for a fan-out, harvest with short
+per-worker timeouts so one stuck worker cannot stall the round.
+
+## For humans writing their own tooling
+
+The same material is worth reading even if you are not an agent — it is the
+shortest description of how to use nermal as a job runner. Start with the
+[CLI overview](/cli/overview), then the
+[command reference](/cli/reference).
