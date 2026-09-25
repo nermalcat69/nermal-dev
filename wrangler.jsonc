@@ -10,6 +10,6 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
-  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "Nermal-dev" }],
+  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "nermal-dev" }],
   "observability": { "enabled": true }
 }
