@@ -14,7 +14,7 @@ export function Hero() {
             <span className="font-medium">A terminal workbench</span>{" "}
             <span className="text-[var(--contrast-muted)]">with a built-in editor.</span>
           </SectionTitle>
-          <Body className="max-w-[48ch] text-[var(--contrast-muted)]">
+          <Body className="mt-5 max-w-[48ch] text-[var(--contrast-muted)]">
             <p>
               Persistent sessions, remote work, and agent support. A background server owns
               your shells and panes, not the window. Written in Rust, rendered on the GPU

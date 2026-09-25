@@ -20,7 +20,7 @@ export function Statement() {
           <SectionTitle className="mx-auto items-center">
             The window does not own your shells.
           </SectionTitle>
-          <Body className="mx-auto max-w-[48ch] text-[var(--quiet)]">
+          <Body className="mx-auto mt-5 max-w-[48ch] text-[var(--quiet)]">
             <p>
               Quitting nermal closes the window and leaves the server running. Your build
               keeps building, your agent keeps working, your SSH session stays up. Open
