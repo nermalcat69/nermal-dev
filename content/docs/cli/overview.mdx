@@ -1,0 +1,157 @@
+---
+title: "The nermal command"
+description: "Driving the workbench from a script, a Makefile, or another agent."
+---
+
+`nermal` is a thin, non-interactive client of the nermal server. Every verb runs and
+exits; `--json` makes the output machine-readable. **The GUI does not have to be
+running** — the server is what owns the panes.
+
+It ships inside every installer and is put on PATH at launch, so it works from
+any terminal on the machine. [Installation →](/getting-started/installation#the-nermal-command)
+
+## Start with `doctor`
+
+```bash
+nermal doctor
+```
+
+One table that answers everything you need before doing anything else: whether a
+server is reachable, whether its wire dialect matches this binary, and whether
+`nermal_CONFIG_DIR` / `nermal_WS` / `nermal_PANE` are set — that is, whether you are
+running *inside* a nermal pane.
+
+Being inside a pane matters because the address-taking verbs (`split`, `send`,
+`capture`, `procs`, `wait`, `pane close`) default to `$nermal_PANE`, and
+`run --keep` files its pane into `$nermal_WS`. Outside one you must name a target,
+and the error says so rather than guessing.
+
+## Addresses
+
+| Shape | Means | Stable? |
+|---|---|---|
+| `%42` | A pane | **Yes** — a pane keeps its id for its whole life |
+| `@7` | A tab, numbered across the whole machine in tree order | **No** — it shifts whenever any workspace or tab appears or disappears |
+| `api` · `76698a44` · a full UUID | A workspace, by name, unique id prefix, or id | Yes |
+
+Re-resolve `@N` immediately before using it. Pane and workspace ids are safe to
+remember.
+
+## Two ways to run something
+
+### Blocking, with a real exit code
+
+```bash
+nermal run -- cargo test           # streams to stdout, exits with cargo's code
+nermal run --cwd /path -- make
+nermal run --keep -- cargo build   # leaves the pane behind as a new tab
+```
+
+The closest thing to running the command yourself — the difference is that it
+gets a real PTY (so colour, progress bars, and TUIs behave), and that you can
+watch it happen in the window.
+
+<Note>
+  Everything after `--` belongs to the child: `nermal run -- cargo test --keep`
+  passes `--keep` to cargo, not to nermal.
+</Note>
+
+### Non-blocking: a pane you talk to over time
+
+This is the one worth reaching for. Get a pane, give it work, come back.
+
+```bash
+PANE=$(nermal split --v)                    # or --h; prints "%83"
+nermal send "$PANE" 'npm run dev' --enter
+# ... later
+nermal capture "$PANE" --plain
+nermal pane close "$PANE"
+```
+
+If you are not inside a nermal pane there is nothing to split, so make your own
+place to work:
+
+```bash
+nermal new --json /path/to/repo    # {"id": "...", "pane": 83}
+```
+
+## Reading a pane
+
+```bash
+nermal capture %83 --plain
+```
+
+`capture` returns what the server stored. Without `--plain` that is the raw
+bytes, escapes and all. With `--plain` those bytes are replayed through a real
+terminal grid and you get the text that produced — which is not the same as
+stripping escapes yourself:
+
+- A line the shell wrapped at the pane width comes back as **one** line
+- A progress bar that rewrote itself with `\r` reads as its **final** value
+- Cursor addressing puts text **where the program put it**, so a TUI's screen
+  lands where it was drawn
+
+Use `--plain` whenever a human would want to read the output.
+
+When all you want is how the last command ended, ask for that much:
+
+```bash
+nermal capture %83 --plain --tail 5
+```
+
+`--tail N` keeps the last N lines of the answer, counted after `--plain` has
+resolved the wraps — so no pipe through `tail(1)`, which is one less thing to
+have on PATH.
+
+<Warning>
+  A screen is a rectangle. Whatever scrolled off the top is gone, and an exit
+  code was never on it. When you want the *answer* rather than the *view*, have
+  the shell write it somewhere clean:
+
+  ```bash
+  nermal send "$PANE" 'cargo test > /tmp/t.log 2>&1; echo $? > /tmp/t.rc' --enter
+  ```
+</Warning>
+
+## Knowing when something finished
+
+```bash
+nermal procs %83
+```
+
+The process tree inside the pane, indented by depth, with `*` on the foreground
+process — plus the ports those processes are listening on. **When the only entry
+left is the depth-0 shell, the command is done.** That is far more reliable than
+grepping the screen for a sentinel that can wrap or echo twice.
+
+For agents specifically, use [`nermal wait`](/agents/orchestration) instead of
+polling.
+
+## Looking around
+
+```bash
+nermal ls              # every workspace: tabs, panes, who's attached
+nermal ws tree api     # one workspace as a tree
+nermal pane ls --all   # every pane, including orphans no workspace holds
+nermal agents          # every coding agent and its status
+nermal status          # server pid, uptime, pane count, build, socket
+nermal machine ls      # this machine plus any linked remotes
+nermal events          # stream server events until interrupted
+```
+
+`--json` on any of them, `-q` to suppress success output (errors still print).
+
+## Remote machines
+
+```bash
+nermal -m devbox ls
+nermal -m devbox run -- cargo test
+```
+
+`-m` routes over a link the local server already holds. It will not dial a fresh
+connection — connect from the GUI first.
+[Remote workspaces →](/remote/workspaces)
+
+<Card title="Full command reference" icon="book" href="/cli/reference">
+  Every verb, flag, and JSON shape.
+</Card>

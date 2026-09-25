@@ -1,12 +1,14 @@
 import { Logo } from "@/components/site/logo";
 import { ThemeSwitch } from "@/components/site/theme-switch";
 import { links } from "@/lib/links";
+import { docsRoute } from "@/lib/shared";
 
 const primary = [
   { label: "Sessions", href: "#sessions" },
   { label: "Editor", href: "#editor" },
   { label: "Agents", href: "#agents" },
   { label: "Git", href: links.git, external: true },
+  { label: "Docs", href: docsRoute },
 ] as const;
 
 const foot = [
