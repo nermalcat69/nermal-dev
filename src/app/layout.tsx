@@ -9,15 +9,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "nermal",
+  title: "Nermal",
   description:
     "A terminal workbench with a built-in editor: persistent sessions, remote work, and agent support.",
 };
 
 // The docs render dark only, so this script must not strip `dark` there or the
 // page would flash light before Fumadocs' provider hydrates. On every other
-// route the site's own `nermal-theme` preference still applies.
-const themeScript = `(function(){try{if(location.pathname.indexOf("/docs")===0)return;var t=localStorage.getItem("nermal-theme");document.documentElement.classList.toggle("dark",t?t==="dark":true);}catch(e){}})();`;
+// route the site's own `Nermal-theme` preference still applies.
+const themeScript = `(function(){try{if(location.pathname.indexOf("/docs")===0)return;var t=localStorage.getItem("Nermal-theme");document.documentElement.classList.toggle("dark",t?t==="dark":true);}catch(e){}})();`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

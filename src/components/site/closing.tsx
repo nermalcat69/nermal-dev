@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Logo } from "@/components/site/logo";
 import { PillLink } from "@/components/site/pill-link";
 import { Reveal } from "@/components/site/reveal";
@@ -9,10 +10,10 @@ const columns = [
   {
     title: "Product",
     items: [
-      { label: "Terminal", href: "#editor" },
+      { label: "Terminal", href: "/#editor" },
       { label: "Editor", href: links.editor, external: true },
       { label: "Git", href: links.git, external: true },
-      { label: "Sessions", href: "#sessions" },
+      { label: "Sessions", href: "/#sessions" },
       { label: "CLI", href: links.cli, external: true },
     ],
   },
@@ -28,7 +29,7 @@ const columns = [
   {
     title: "Pricing",
     items: [
-      { label: "Free", href: links.releases, external: true },
+      { label: "Free", href: "/pricing" },
       { label: "MIT license", href: links.license, external: true },
       { label: "GitHub releases", href: links.releases, external: true },
     ],
@@ -46,7 +47,7 @@ const columns = [
 
 export function Closing() {
   return (
-    <section aria-label="Get nermal" className="bg-[var(--paper)] text-[var(--ink)]">
+    <section aria-label="Get Nermal" className="bg-[var(--paper)] text-[var(--ink)]">
       <Container className="flex flex-col items-center pt-16 text-center md:pt-[112px]">
         <Reveal>
           <SectionTitle className="mx-auto max-w-[14ch] sm:text-[56px]">
@@ -88,10 +89,10 @@ export function Closing() {
           ))}
         </nav>
         <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-black/10 pt-6">
-          <a href="#top" className="flex items-center gap-2 text-[var(--ink)]">
+          <Link href="/#top" className="flex items-center gap-2 text-[var(--ink)]">
             <Logo className="h-5 w-5" />
-            <span className="text-[13px] font-medium">nermal</span>
-          </a>
+            <span className="text-[13px] font-medium">Nermal</span>
+          </Link>
           <p className="text-[13px] text-[var(--quiet)]">MIT License. Copyright 2026 Arjun Aditya.</p>
         </div>
       </Container>

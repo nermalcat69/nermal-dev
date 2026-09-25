@@ -22,9 +22,9 @@ export function Statement() {
           </SectionTitle>
           <Body className="mx-auto mt-5 max-w-[48ch] text-[var(--quiet)]">
             <p>
-              Quitting nermal closes the window and leaves the server running. Your build
+              Quitting Nermalcloses the window and leaves the server running. Your build
               keeps building, your agent keeps working, your SSH session stays up. Open
-              nermal again and it reattaches to exactly what was there.
+              Nermalagain and it reattaches to exactly what was there.
             </p>
           </Body>
           <div className="mt-8 flex justify-center">

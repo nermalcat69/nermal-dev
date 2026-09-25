@@ -4,34 +4,34 @@ description: "One agent opening a pane for another, waiting on it, and reading t
 ---
 
 Once an agent's status is a thing a program can ask about, one agent can run
-another. nermal gives that loop a primitive instead of leaving it to screen
+another. Nermalgives that loop a primitive instead of leaving it to screen
 scraping.
 
 ## The loop
 
 ```bash
 # 1. give the worker a pane
-PANE=$(nermal split --v)
+PANE=$(Nermalsplit --v)
 
 # 2. hand it a task
-nermal send "$PANE" 'claude -p "add tests for the parser"' --enter
+Nermalsend "$PANE" 'claude -p "add tests for the parser"' --enter
 
 # 3. sleep until it needs you or finishes
-nermal wait "$PANE" --until waiting,done --changed --timeout 600
+Nermalwait "$PANE" --until waiting,done --changed --timeout 600
 
 # 4. read what happened
-nermal capture "$PANE" --plain
+Nermalcapture "$PANE" --plain
 
 # 5. clean up
-nermal pane close "$PANE"
+Nermalpane close "$PANE"
 ```
 
 That is the whole shape. The interesting step is the third.
 
-## `nermal wait`
+## `Nermalwait`
 
 ```bash
-nermal wait [%PANE] [--until STATE,…] [--changed] [--timeout SECS] [--interval MS]
+Nermalwait [%PANE] [--until STATE,…] [--changed] [--timeout SECS] [--interval MS]
 ```
 
 Blocks until the pane reaches one of the states you named.
@@ -73,8 +73,8 @@ question is whether anything is still running in front of the shell, which is
 what `free` answers:
 
 ```bash
-nermal send "$PANE" 'cargo test > /tmp/t.log 2>&1; echo $? > /tmp/t.rc' --enter
-nermal wait "$PANE" --until free --changed --timeout 900
+Nermalsend "$PANE" 'cargo test > /tmp/t.log 2>&1; echo $? > /tmp/t.rc' --enter
+Nermalwait "$PANE" --until free --changed --timeout 900
 cat /tmp/t.rc /tmp/t.log
 ```
 
@@ -84,8 +84,8 @@ and only once the agent ladder has not already answered, so pairing it with
 
 <Warning>
   `free` is read off the process tree, which has two blind spots. A pane whose
-  own root process *is* the command — what `nermal run` spawns — looks free the
-  whole time it runs; wait on `nermal run` itself instead, it already blocks. And
+  own root process *is* the command — what `Nermalrun` spawns — looks free the
+  whole time it runs; wait on `Nermalrun` itself instead, it already blocks. And
   a backgrounded job (`… &`) keeps the pane busy after the foreground command
   has finished.
 </Warning>
@@ -124,42 +124,42 @@ not text, are the answer to — a permission prompt driven by the arrow keys, a
 menu, a TUI to be dismissed. `send --key` presses keys:
 
 ```bash
-nermal wait "$PANE" --until waiting --changed   # it needs something
-nermal capture "$PANE" --plain | tail -20       # see what it is asking
-nermal send "$PANE" --key down --key enter      # answer it
-nermal send "$PANE" --key C-c                   # or stop it altogether
+Nermalwait "$PANE" --until waiting --changed   # it needs something
+Nermalcapture "$PANE" --plain | tail -20       # see what it is asking
+Nermalsend "$PANE" --key down --key enter      # answer it
+Nermalsend "$PANE" --key C-c                   # or stop it altogether
 ```
 
 Keys are delivered as separate events 200 ms apart, so a raw-mode TUI reads a
 sequence as a sequence rather than as a paste. The
-[full vocabulary](/cli/reference#nermal-send-pane-text-enter-key-key) is in the
+[full vocabulary](/cli/reference#Nermal-send-pane-text-enter-key-key) is in the
 reference.
 
 ## When an agent never moves
 
-If `nermal wait` times out and `nermal agents` shows a status that never changes,
+If `Nermalwait` times out and `Nermalagents` shows a status that never changes,
 the likely cause is that the agent's status hooks are not installed or are out
-of date — the agent is working fine, it just has no way to say so. `nermal doctor`
-reports where every agent's hooks stand, and `nermal agents` names the specific
+of date — the agent is working fine, it just has no way to say so. `Nermaldoctor`
+reports where every agent's hooks stand, and `Nermalagents` names the specific
 one when it can see the gap.
 
 ## Watching everything at once
 
 ```bash
-nermal agents          # every agent on the machine: pane, agent, status, message
-nermal agents --json   # the same, parseable
+Nermalagents          # every agent on the machine: pane, agent, status, message
+Nermalagents --json   # the same, parseable
 ```
 
 If you are an agent yourself, you are in that list too.
 
 ## Teaching an agent to do this
 
-nermal installs nothing into `~/.claude` for it — no switch in **Settings →
+Nermalinstalls nothing into `~/.claude` for it — no switch in **Settings →
 Agents** writes a skill, and none ever will. What the agent needs to know ships
 in the repository instead, as a skill you install yourself:
 
 ```bash
-npx skills add nermalcat69/nermal-ide
+npx skills add Nermalcat69/Nermal-ide
 ```
 
 That covers the pane-driving half — where it is, how to open a pane, send into
@@ -177,13 +177,13 @@ never touches another pane pays nothing for it.
   agents mid-task. Treat anything you did not create as read-only.
 </Warning>
 
-- **Never `send` into a pane you did not open.** Check `nermal agents` first.
+- **Never `send` into a pane you did not open.** Check `Nermalagents` first.
 - **Never close a pane, tab, or workspace you did not create.**
 - **Never `server stop` or `server restart`.** Every pane on the machine dies
   with it.
-- **Clean up what you did create** — `nermal pane close %83` when you are done.
-  An interrupted `run` leaves its pane behind; `nermal pane ls --all` shows those,
-  and `nermal pane close --orphans` clears them. That last one is a human's
+- **Clean up what you did create** — `Nermalpane close %83` when you are done.
+  An interrupted `run` leaves its pane behind; `Nermalpane ls --all` shows those,
+  and `Nermalpane close --orphans` clears them. That last one is a human's
   broom, not an agent's: it closes every orphan on the machine, including ones
   somebody else abandoned mid-command.
 

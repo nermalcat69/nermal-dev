@@ -31,7 +31,7 @@ export function Split() {
               <CardMedia className="overflow-hidden rounded-[10px] ring-1 ring-white/10">
                 <Image
                   src="/hero.webp"
-                  alt="nermal showing a sidebar of agent sessions across several repositories"
+                  alt="Nermalshowing a sidebar of agent sessions across several repositories"
                   fill
                   sizes="(min-width: 768px) 500px, 100vw"
                   className="object-cover object-left"
@@ -40,7 +40,7 @@ export function Split() {
               <CardCopy title="Recognised on sight.">
                 <p className="text-[#a1a1a1]">
                   22 coding CLIs are recognised in the pane, including Claude Code and
-                  Codex. nermal does not wrap them. You get per-pane status, a notification
+                  Codex. Nermaldoes not wrap them. You get per-pane status, a notification
                   when one needs you, git context on the row, and the session resumes after
                   a reboot.
                 </p>

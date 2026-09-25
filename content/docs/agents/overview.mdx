@@ -1,16 +1,16 @@
 ---
 title: "Coding agents"
-description: "What nermal does around Claude Code, Codex, TraeCode, and 19 others — without ever wrapping them."
+description: "What Nermaldoes around Claude Code, Codex, TraeCode, and 19 others — without ever wrapping them."
 ---
 
-nermal recognises coding agents running in a pane and builds around them. It does
+Nermalrecognises coding agents running in a pane and builds around them. It does
 not wrap them, proxy them, or replace their interface: the agent you start is
-the agent you get, running in a normal PTY, with its own UI. nermal adds the
+the agent you get, running in a normal PTY, with its own UI. Nermaladds the
 things a terminal is in a position to add — who is running where, what they
 need, and what changed.
 
 <Frame caption="Placeholder — screenshot: a sidebar of agent sessions across several repos, each with a brand avatar and status dot">
-  <img src="/images/placeholder.svg" alt="Agent sessions in the nermal sidebar" />
+  <img src="/images/placeholder.svg" alt="Agent sessions in the Nermalsidebar" />
 </Frame>
 
 ## Which agents
@@ -90,8 +90,8 @@ Just by running an agent in a pane:
 ## What needs a hook
 
 Live status — **working**, **needs your input**, **done** — comes from the agent
-itself, over a channel nermal installs into that agent's configuration. It powers
-the status dots, the notifications, the tray icon, and `nermal wait`.
+itself, over a channel Nermalinstalls into that agent's configuration. It powers
+the status dots, the notifications, the tray icon, and `Nermalwait`.
 
 Installing takes one click per agent under **Settings → Agents**.
 [Status and notifications →](/agents/status)
@@ -106,6 +106,6 @@ Installing takes one click per agent under **Settings → Agents**.
     Resume, fork, and copying a session id.
   </Card>
   <Card title="Orchestration" icon="diagram-project" href="/agents/orchestration">
-    One agent driving another with `nermal wait`.
+    One agent driving another with `Nermalwait`.
   </Card>
 </CardGroup>

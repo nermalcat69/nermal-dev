@@ -3,11 +3,11 @@ title: "The prompt"
 description: "Ghost suggestions, tab completion that explains itself, syntax highlighting, and real multi-line editing."
 ---
 
-nermal puts an editor at the shell prompt. Nothing to install, no plugin to source
+Nermalputs an editor at the shell prompt. Nothing to install, no plugin to source
 — the moment a supported shell starts in a pane, the prompt behaves like this.
 
 <Frame caption="Placeholder — video: typing a command with a ghost suggestion, accepting it, then opening the completion menu">
-  <img src="/images/placeholder.svg" alt="The nermal prompt" />
+  <img src="/images/placeholder.svg" alt="The Nermalprompt" />
 </Frame>
 
 ## Ghost suggestions
@@ -39,7 +39,7 @@ build up first, and it carries across sessions and reboots.
   <img src="/images/placeholder.svg" alt="Explained tab completion" />
 </Frame>
 
-When nermal has nothing useful to offer, the <kbd>⇥</kbd> falls through to your
+When Nermalhas nothing useful to offer, the <kbd>⇥</kbd> falls through to your
 shell's own completion, so a carefully configured zsh setup is not lost.
 
 To hand <kbd>⇥</kbd> back to the shell entirely, turn off **Settings → Input →
@@ -108,14 +108,14 @@ Keybindings**.
 
 ## Which shells
 
-The prompt features arrive through nermal's shell integration, which is injected
+The prompt features arrive through Nermal's shell integration, which is injected
 automatically — nothing to add to your rc file — for **zsh**, **bash**,
 **fish**, **PowerShell**, and **WSL**. Other shells (nushell, elvish, xonsh, and
 the rest) run perfectly well in a pane; they simply do not get the prompt layer.
 
 The integration is also what reports the working directory, the exit code of
 each command, and where prompts begin — which is what the sidebar's branch
-readout, the "command finished" notification, and `nermal procs` are built on.
+readout, the "command finished" notification, and `Nermalprocs` are built on.
 
 [How shell integration works →](/reference/shell-integration)
 
@@ -136,22 +136,22 @@ Turning off **Settings → Input → Prompt → Prompt editor**
 keystroke at the prompt — printable characters, arrows, IME commits, paste — goes
 straight to the PTY, and your shell's own line editor does the editing: zsh's
 ZLE, bash's readline, fish's reader. A widget you bound yourself runs exactly as
-it does outside nermal:
+it does outside Nermal:
 
 ```zsh
-# ~/.zshrc — works at a nermal prompt with the editor off
+# ~/.zshrc — works at a Nermalprompt with the editor off
 bindkey '^[[A' history-beginning-search-backward-end
 ```
 
 What you give up is the layer this page describes: ghost suggestions, the
 completion menu, the fuzzy <kbd>⌃ R</kbd>, the multi-line editor, mouse caret
 placement and undo on the prompt. Tab completion and history search grey out in
-Settings while it is off — both are menus nermal opens inside that editor, so
+Settings while it is off — both are menus Nermalopens inside that editor, so
 there is nothing left for them to switch.
 
 What you keep is everything shell integration reports: prompt boundaries, the
 working directory, exit codes, "command finished" notifications, the sidebar's
-branch readout, `nermal procs`. The setting moves the line editor, not the
+branch readout, `Nermalprocs`. The setting moves the line editor, not the
 integration.
 
 It applies to open panes immediately, so there is nothing to restart, and a line

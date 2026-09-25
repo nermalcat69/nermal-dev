@@ -1,6 +1,6 @@
 ---
 title: "The agent skill"
-description: "Teaching a coding agent to use nermal properly — including when not to."
+description: "Teaching a coding agent to use Nermalproperly — including when not to."
 ---
 
 The CLI is only half of the story. An agent has to know *when* reaching for a
@@ -10,17 +10,17 @@ touch. That is what the skill is for.
 ## Installing it
 
 ```bash
-npx skills add nermalcat69/nermal-ide
+npx skills add Nermalcat69/Nermal-ide
 ```
 
 The source lives at
-[`skills/nermal/`](https://github.com/nermalcat69/nermal-ide/tree/main/skills/nermal) in the
+[`skills/Nermal/`](https://github.com/Nermalcat69/Nermal-ide/tree/main/skills/Nermal) in the
 repository: a `SKILL.md` and two references — the full command table, and a
 delegation playbook the agent reads before handing work to another agent.
 
 <Note>
-  This is the only skill nermal has — nothing in **Settings → Agents** installs
-  one for you. Using the CLI to run *other* agents — a worker pane, `nermal wait`,
+  This is the only skill Nermalhas — nothing in **Settings → Agents** installs
+  one for you. Using the CLI to run *other* agents — a worker pane, `Nermalwait`,
   collecting the result — is covered separately.
   [Orchestration →](/agents/orchestration)
 </Note>
@@ -28,15 +28,15 @@ delegation playbook the agent reads before handing work to another agent.
 ## Updating it
 
 `add` does not refresh a skill that is already installed — updating is its own
-command, and the skill is named `nermal`:
+command, and the skill is named `Nermal`:
 
 ```bash
-npx skills update nermal    # this one
+npx skills update Nermal   # this one
 npx skills update         # everything you have installed
 ```
 
 The CLI records where each skill came from, so `update` re-downloads only what
-has drifted. `npx skills remove nermal` takes it back out.
+has drifted. `npx skills remove Nermal` takes it back out.
 
 ## What it teaches
 
@@ -64,14 +64,14 @@ its job, and exits. A pane is right when:
 </Warning>
 
 - **Never `send` into a pane you did not open.** Keystrokes land in the middle
-  of whatever is happening there. Check `nermal agents` first.
+  of whatever is happening there. Check `Nermalagents` first.
 - **Never close a pane, tab, or workspace you did not create.**
 - **Never `server stop` or `server restart`.** Every pane on the machine dies
   with the server, including yours.
-- **Never `nermal server start` on your own initiative** when `doctor` says the
+- **Never `Nermalserver start` on your own initiative** when `doctor` says the
   server is unreachable — starting one the user did not ask for changes what
   their GUI attaches to. Tell them instead.
-- **Clean up what you did create.** `nermal pane close %83` when the scratch pane
+- **Clean up what you did create.** `Nermalpane close %83` when the scratch pane
   is done with.
 
 ### The reliable idioms
@@ -81,13 +81,13 @@ actually answer the question:
 
 ```bash
 # is it finished? — when only the depth-0 shell is left, yes
-nermal procs %83 --json
+Nermalprocs %83 --json
 
 # the answer, not the view
-nermal send "$PANE" 'cargo test > /tmp/t.log 2>&1; echo $? > /tmp/t.rc' --enter
+Nermalsend "$PANE" 'cargo test > /tmp/t.log 2>&1; echo $? > /tmp/t.rc' --enter
 
 # wake up exactly when the other agent needs something
-nermal wait %3 --until waiting,done --changed --timeout 600
+Nermalwait %3 --until waiting,done --changed --timeout 600
 ```
 
 ### How to delegate
@@ -95,13 +95,13 @@ nermal wait %3 --until waiting,done --changed --timeout 600
 `references/delegation.md` is the part the agent reads before spawning a
 worker: give the worker its own git worktree and workspace, hand the task over
 in interactive mode with the delivery contract in the prompt, prove the
-command actually started, babysit with `nermal wait`, collect the result out of
+command actually started, babysit with `Nermalwait`, collect the result out of
 git rather than the screen, clean up — and, for a fan-out, harvest with short
 per-worker timeouts so one stuck worker cannot stall the round.
 
 ## For humans writing their own tooling
 
 The same material is worth reading even if you are not an agent — it is the
-shortest description of how to use nermal as a job runner. Start with the
+shortest description of how to use Nermalas a job runner. Start with the
 [CLI overview](/cli/overview), then the
 [command reference](/cli/reference).

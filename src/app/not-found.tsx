@@ -7,7 +7,7 @@ import { docsRoute } from "@/lib/shared";
 import { links } from "@/lib/links";
 
 export const metadata: Metadata = {
-  title: "Page not found · nermal",
+  title: "Page not found · Nermal",
   description: "That page does not exist. Try the documentation or head back home.",
 };
 
@@ -41,7 +41,7 @@ export default function NotFound() {
             className="flex items-center gap-2 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-[var(--ink)]"
           >
             <Logo className="h-5 w-8 shrink-0" />
-            <span className="text-[15px] font-medium tracking-[-0.02em]">nermal</span>
+            <span className="text-[15px] font-medium tracking-[-0.02em]">Nermal</span>
           </Link>
           <Link
             href={docsRoute}

@@ -38,7 +38,7 @@ export function Hero() {
             />
             <Image
               src="/hero.webp"
-              alt="nermal showing a sidebar of agent sessions across several repositories"
+              alt="Nermalshowing a sidebar of agent sessions across several repositories"
               width={1470}
               height={956}
               priority

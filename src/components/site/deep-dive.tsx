@@ -35,7 +35,7 @@ export function DeepDive() {
           >
             <table className="w-full min-w-[640px] border-collapse text-left">
               <caption className="sr-only">
-                Five-run average throughput: nermal versus Alacritty, Ghostty, and Kitty
+                Five-run average throughput: Nermalversus Alacritty, Ghostty, and Kitty
               </caption>
               <thead>
                 <tr className="border-b border-[var(--line)] text-[13px] text-[var(--contrast-muted)]">
@@ -47,7 +47,7 @@ export function DeepDive() {
                       scope="col"
                       key={column}
                       className={
-                        column === "nermal"
+                        column === "Nermal"
                           ? "px-4 py-3 font-medium text-[var(--contrast-ink)]"
                           : "px-4 py-3 font-normal"
                       }
@@ -111,7 +111,7 @@ export function DeepDive() {
         <Reveal className="mt-14 md:mt-16">
           <Image
             src="/hero.webp"
-            alt="The nermal workbench, GPU-rendered, with a persistent sidebar of panes"
+            alt="The Nermalworkbench, GPU-rendered, with a persistent sidebar of panes"
             width={1470}
             height={956}
             loading="lazy"

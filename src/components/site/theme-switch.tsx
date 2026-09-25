@@ -3,8 +3,8 @@
 import { useSyncExternalStore } from "react";
 
 function subscribe(onStoreChange: () => void) {
-  window.addEventListener("nermal-theme", onStoreChange);
-  return () => window.removeEventListener("nermal-theme", onStoreChange);
+  window.addEventListener("Nermal-theme", onStoreChange);
+  return () => window.removeEventListener("Nermal-theme", onStoreChange);
 }
 
 function snapshot() {
@@ -17,8 +17,8 @@ export function ThemeSwitch() {
   function toggle() {
     const next = theme === "dark" ? "light" : "dark";
     document.documentElement.classList.toggle("dark", next === "dark");
-    localStorage.setItem("nermal-theme", next);
-    window.dispatchEvent(new Event("nermal-theme"));
+    localStorage.setItem("Nermal-theme", next);
+    window.dispatchEvent(new Event("Nermal-theme"));
   }
 
   const label = theme === "dark" ? "Light" : "Dark";

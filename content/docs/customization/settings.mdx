@@ -8,7 +8,7 @@ setting names *and* keywords, which is usually faster than remembering which
 section something is in.
 
 <Frame caption="Placeholder — screenshot: the Settings window with the section list on the left">
-  <img src="/images/placeholder.svg" alt="nermal Settings" />
+  <img src="/images/placeholder.svg" alt="NermalSettings" />
 </Frame>
 
 ## The eight sections
@@ -47,10 +47,10 @@ Everything the Settings window writes goes to one file:
 
 | | |
 |---|---|
-| macOS / Linux | `~/.config/nermal/config.json` |
-| Windows | `%APPDATA%\nermal\config.json` |
+| macOS / Linux | `~/.config/Nermal/config.json` |
+| Windows | `%APPDATA%\Nermal\config.json` |
 
-Set `nermal_CONFIG_DIR` to point the whole directory — config, themes, state —
+Set `Nermal_CONFIG_DIR` to point the whole directory — config, themes, state —
 somewhere else.
 
 You can edit the file by hand; a handful of options exist only there. See the
@@ -65,7 +65,7 @@ The file is written atomically, and read forgivingly:
 - **An out-of-range number** is clamped into its band, not rejected.
 - **An unrecognised enum value** falls back to the default with a log line,
   rather than failing the whole file.
-- **An unparseable file** is not overwritten. nermal starts on defaults, keeps a
+- **An unparseable file** is not overwritten. Nermalstarts on defaults, keeps a
   copy at `config.json.corrupt`, and says so in the log.
 
 <Note>

@@ -3,16 +3,16 @@ title: "Core concepts"
 description: "Workspaces, tabs, panes — and the background server that owns them all."
 ---
 
-Four words explain most of nermal. Three of them you can see; the fourth is the
+Four words explain most of Nermal. Three of them you can see; the fourth is the
 reason the other three survive a reboot.
 
 ## Pane
 
 A **pane** is one terminal: one shell (or one program) attached to one PTY. It
-is the only thing in nermal that actually runs something.
+is the only thing in Nermalthat actually runs something.
 
 Panes have stable ids — `%42` — for their whole life. That id is what the
-[CLI](/cli/overview) addresses, and what `$nermal_PANE` holds inside the pane
+[CLI](/cli/overview) addresses, and what `$Nermal_PANE` holds inside the pane
 itself.
 
 ## Tab
@@ -21,7 +21,7 @@ A **tab** is a layout of panes. One pane to start with; split it and the tab
 holds two, arranged in rows and columns you can drag around.
 
 Tabs appear in the sidebar (or the top strip, if you move it there). A tab's
-label is the best evidence nermal has: a name you set, else the coding agent
+label is the best evidence Nermalhas: a name you set, else the coding agent
 running in it, else the last segment of its working directory.
 
 ## Workspace
@@ -37,12 +37,12 @@ just that machine. <kbd>⌘ ⇧ N</kbd> opens the New Workspace form, where you
 pick the machine (this computer, or any configured SSH host) and optionally a
 name.
 
-Workspaces are how nermal keeps ten repositories from becoming forty
+Workspaces are how Nermalkeeps ten repositories from becoming forty
 indistinguishable tabs. They also travel: a workspace on a remote machine is
 still a workspace, opened from the same switcher.
 
 <Frame caption="Placeholder — screenshot: the workspace switcher, workspaces on the left, that workspace's tabs on the right">
-  <img src="/images/placeholder.svg" alt="The nermal workspace switcher" />
+  <img src="/images/placeholder.svg" alt="The Nermalworkspace switcher" />
 </Frame>
 
 ## The server
@@ -50,13 +50,13 @@ still a workspace, opened from the same switcher.
 Here is the part that matters. **The window does not own your shells — a
 background server does.**
 
-Quitting nermal closes the window and leaves that server running. Your build keeps
-building, your agent keeps working, your SSH session stays up. Open nermal again
+Quitting Nermalcloses the window and leaves that server running. Your build keeps
+building, your agent keeps working, your SSH session stays up. Open Nermalagain
 and it reattaches to exactly what was there.
 
 This is also why:
 
-- **`nermal` works from any terminal.** The CLI talks to the same server. The GUI
+- **`Nermal` works from any terminal.** The CLI talks to the same server. The GUI
   does not have to be running at all.
 - **A crash is not a catastrophe.** Panes come back showing what was on them:
   a capped tail of each pane's output is kept on disk and handed to the pane
@@ -72,7 +72,7 @@ This is also why:
 
 ### What survives what
 
-| | Close a tab | Quit nermal | Stop the server | Reboot |
+| | Close a tab | Quit Nermal| Stop the server | Reboot |
 |---|:--:|:--:|:--:|:--:|
 | The shell keeps running | ✗ | ✓ | ✗ | ✗ |
 | The layout comes back | ✗ | ✓ | ✓ | ✓ |
@@ -91,7 +91,7 @@ own panes.
 The switcher lists them together, and the CLI reaches them with `-m`:
 
 ```bash
-nermal -m devbox ls
+Nermal-m devbox ls
 ```
 
 Remote panes run on the remote machine — the files, the repository, the git
@@ -104,11 +104,11 @@ Every pane exports these, and anything you launch from one inherits them:
 
 | Variable | What it holds |
 |---|---|
-| `nermal_PANE` | This pane's id — the default target of `nermal split`, `send`, `capture`, `procs`. |
-| `nermal_WS` | This pane's workspace id. |
-| `nermal_CONFIG_DIR` | The config directory, which is how the CLI finds the right server. |
+| `Nermal_PANE` | This pane's id — the default target of `Nermalsplit`, `send`, `capture`, `procs`. |
+| `Nermal_WS` | This pane's workspace id. |
+| `Nermal_CONFIG_DIR` | The config directory, which is how the CLI finds the right server. |
 
-`echo $nermal_PANE` is the fastest way to tell whether you are inside nermal at all.
+`echo $Nermal_PANE` is the fastest way to tell whether you are inside Nermalat all.
 
 <Card title="Drive it from a script" icon="terminal" href="/cli/overview">
   Those ids are the whole interface. The CLI page starts there.

@@ -4,12 +4,12 @@
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-09-24",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
-  // nermal.dev must be a zone on this Cloudflare account
-  "routes": [{ "pattern": "nermal.dev", "custom_domain": true }],
+  // Nermal.dev must be a zone on this Cloudflare account
+  "routes": [{ "pattern": "Nermal.dev", "custom_domain": true }],
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
-  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "nermal-dev" }],
+  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "Nermal-dev" }],
   "observability": { "enabled": true }
 }

@@ -5,10 +5,9 @@ import { docsRoute } from '@/lib/shared';
 export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
-      title: 'nermal',
+      title: 'Nermal',
       url: '/',
     },
-    githubUrl: links.repo,
     // The docs are dark-only: the switch is removed and the `d` hotkey is
     // disabled in the provider, so there is no way to opt out of dark here.
     slots: {

@@ -5,7 +5,7 @@ export type RepoStats = {
 
 const FALLBACK: RepoStats = { stars: 14, downloads: 6 };
 
-const REPO = "https://api.github.com/repos/nermalcat69/nermal-ide";
+const REPO = "https://api.github.com/repos/Nermalcat69/Nermal-ide";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
@@ -26,7 +26,7 @@ function readDownloads(value: unknown): number | null {
       const { name, download_count: count } = asset;
       if (typeof name !== "string" || typeof count !== "number") continue;
       // Installer archives only. Checksums and bundled server binaries are not the app.
-      if (name === "checksums.txt" || name.startsWith("nermal-server")) continue;
+      if (name === "checksums.txt" || name.startsWith("Nermal-server")) continue;
       sum += count;
     }
   }
@@ -37,7 +37,7 @@ export async function loadStats(): Promise<RepoStats> {
   try {
     const headers = {
       Accept: "application/vnd.github+json",
-      "User-Agent": "nermal-site",
+      "User-Agent": "Nermal-site",
     };
     const [repoRes, releaseRes] = await Promise.all([
       fetch(REPO, { headers, next: { revalidate: 3600 } }),

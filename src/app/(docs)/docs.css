@@ -46,3 +46,31 @@
     opacity: 0.6;
   }
 }
+
+/* Unlayered on purpose: Fumadocs' `flex` / `flex-col` utilities live in the
+   utilities layer and would otherwise beat these `display` overrides. */
+/* Sidebar header: search on the left, collapse button beside it. The title
+   row is flattened with `display: contents` so its button can share a grid
+   row with the search trigger, the header's second child. */
+#nd-sidebar div.gap-3.p-4:has(> div.flex button) {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 0.5rem;
+  row-gap: 0.75rem;
+}
+#nd-sidebar div.gap-3.p-4:has(> div.flex button) > * {
+  grid-column: 1 / -1;
+}
+#nd-sidebar div.gap-3.p-4:has(> div.flex button) > div.flex {
+  display: contents;
+}
+#nd-sidebar div.gap-3.p-4:has(> div.flex button) > div.flex > button {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+}
+#nd-sidebar div.gap-3.p-4:has(> div.flex button) > :nth-child(2) {
+  grid-column: 1;
+  grid-row: 1;
+}

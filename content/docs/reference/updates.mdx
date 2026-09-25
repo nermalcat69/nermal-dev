@@ -1,6 +1,6 @@
 ---
 title: "Updates"
-description: "How nermal updates itself, and what the two channels mean."
+description: "How Nermalupdates itself, and what the two channels mean."
 ---
 
 **Settings → About** is where everything lives: the version you are on, the
@@ -10,7 +10,7 @@ channel you follow, and the button that installs what is waiting.
 
 <Steps>
   <Step title="Check">
-    nermal checks at launch and every six hours after that. Turn it off entirely
+    Nermalchecks at launch and every six hours after that. Turn it off entirely
     with `check_for_updates: false`, or check on demand with **Check now**.
   </Step>
   <Step title="Download and verify, in the background">
@@ -23,7 +23,7 @@ channel you follow, and the button that installs what is waiting.
     (`auto_download_updates: false`)
   </Step>
   <Step title="Update and relaunch">
-    A dedicated `nermal-updater` helper verifies the release checksum, the bundle
+    A dedicated `Nermal-updater` helper verifies the release checksum, the bundle
     version, and — on macOS — the code-signing requirement, before replacing the
     installation. If the relaunch fails, it puts the previous copy back.
   </Step>
@@ -77,7 +77,7 @@ the deferred prompt, and any transfer still in flight.
 
 ## "The background server is still running &lt;build&gt;"
 
-If Settings tells you this, nermal was updated in place: the app is the new build,
+If Settings tells you this, Nermalwas updated in place: the app is the new build,
 but your panes are still served by the previous one. Restarting the server picks
 up the new one — **and ends every process running in your panes**, shells,
 agents, and SSH sessions alike.

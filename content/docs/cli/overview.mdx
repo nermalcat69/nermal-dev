@@ -1,29 +1,29 @@
 ---
-title: "The nermal command"
+title: "The Nermalcommand"
 description: "Driving the workbench from a script, a Makefile, or another agent."
 ---
 
-`nermal` is a thin, non-interactive client of the nermal server. Every verb runs and
+`Nermal` is a thin, non-interactive client of the Nermalserver. Every verb runs and
 exits; `--json` makes the output machine-readable. **The GUI does not have to be
 running** — the server is what owns the panes.
 
 It ships inside every installer and is put on PATH at launch, so it works from
-any terminal on the machine. [Installation →](/getting-started/installation#the-nermal-command)
+any terminal on the machine. [Installation →](/getting-started/installation#the-Nermal-command)
 
 ## Start with `doctor`
 
 ```bash
-nermal doctor
+Nermaldoctor
 ```
 
 One table that answers everything you need before doing anything else: whether a
 server is reachable, whether its wire dialect matches this binary, and whether
-`nermal_CONFIG_DIR` / `nermal_WS` / `nermal_PANE` are set — that is, whether you are
-running *inside* a nermal pane.
+`Nermal_CONFIG_DIR` / `Nermal_WS` / `Nermal_PANE` are set — that is, whether you are
+running *inside* a Nermalpane.
 
 Being inside a pane matters because the address-taking verbs (`split`, `send`,
-`capture`, `procs`, `wait`, `pane close`) default to `$nermal_PANE`, and
-`run --keep` files its pane into `$nermal_WS`. Outside one you must name a target,
+`capture`, `procs`, `wait`, `pane close`) default to `$Nermal_PANE`, and
+`run --keep` files its pane into `$Nermal_WS`. Outside one you must name a target,
 and the error says so rather than guessing.
 
 ## Addresses
@@ -42,9 +42,9 @@ remember.
 ### Blocking, with a real exit code
 
 ```bash
-nermal run -- cargo test           # streams to stdout, exits with cargo's code
-nermal run --cwd /path -- make
-nermal run --keep -- cargo build   # leaves the pane behind as a new tab
+Nermalrun -- cargo test           # streams to stdout, exits with cargo's code
+Nermalrun --cwd /path -- make
+Nermalrun --keep -- cargo build   # leaves the pane behind as a new tab
 ```
 
 The closest thing to running the command yourself — the difference is that it
@@ -52,8 +52,8 @@ gets a real PTY (so colour, progress bars, and TUIs behave), and that you can
 watch it happen in the window.
 
 <Note>
-  Everything after `--` belongs to the child: `nermal run -- cargo test --keep`
-  passes `--keep` to cargo, not to nermal.
+  Everything after `--` belongs to the child: `Nermalrun -- cargo test --keep`
+  passes `--keep` to cargo, not to Nermal.
 </Note>
 
 ### Non-blocking: a pane you talk to over time
@@ -61,24 +61,24 @@ watch it happen in the window.
 This is the one worth reaching for. Get a pane, give it work, come back.
 
 ```bash
-PANE=$(nermal split --v)                    # or --h; prints "%83"
-nermal send "$PANE" 'npm run dev' --enter
+PANE=$(Nermalsplit --v)                    # or --h; prints "%83"
+Nermalsend "$PANE" 'npm run dev' --enter
 # ... later
-nermal capture "$PANE" --plain
-nermal pane close "$PANE"
+Nermalcapture "$PANE" --plain
+Nermalpane close "$PANE"
 ```
 
-If you are not inside a nermal pane there is nothing to split, so make your own
+If you are not inside a Nermalpane there is nothing to split, so make your own
 place to work:
 
 ```bash
-nermal new --json /path/to/repo    # {"id": "...", "pane": 83}
+Nermalnew --json /path/to/repo    # {"id": "...", "pane": 83}
 ```
 
 ## Reading a pane
 
 ```bash
-nermal capture %83 --plain
+Nermalcapture %83 --plain
 ```
 
 `capture` returns what the server stored. Without `--plain` that is the raw
@@ -96,7 +96,7 @@ Use `--plain` whenever a human would want to read the output.
 When all you want is how the last command ended, ask for that much:
 
 ```bash
-nermal capture %83 --plain --tail 5
+Nermalcapture %83 --plain --tail 5
 ```
 
 `--tail N` keeps the last N lines of the answer, counted after `--plain` has
@@ -109,14 +109,14 @@ have on PATH.
   the shell write it somewhere clean:
 
   ```bash
-  nermal send "$PANE" 'cargo test > /tmp/t.log 2>&1; echo $? > /tmp/t.rc' --enter
+  Nermalsend "$PANE" 'cargo test > /tmp/t.log 2>&1; echo $? > /tmp/t.rc' --enter
   ```
 </Warning>
 
 ## Knowing when something finished
 
 ```bash
-nermal procs %83
+Nermalprocs %83
 ```
 
 The process tree inside the pane, indented by depth, with `*` on the foreground
@@ -124,19 +124,19 @@ process — plus the ports those processes are listening on. **When the only ent
 left is the depth-0 shell, the command is done.** That is far more reliable than
 grepping the screen for a sentinel that can wrap or echo twice.
 
-For agents specifically, use [`nermal wait`](/agents/orchestration) instead of
+For agents specifically, use [`Nermalwait`](/agents/orchestration) instead of
 polling.
 
 ## Looking around
 
 ```bash
-nermal ls              # every workspace: tabs, panes, who's attached
-nermal ws tree api     # one workspace as a tree
-nermal pane ls --all   # every pane, including orphans no workspace holds
-nermal agents          # every coding agent and its status
-nermal status          # server pid, uptime, pane count, build, socket
-nermal machine ls      # this machine plus any linked remotes
-nermal events          # stream server events until interrupted
+Nermalls              # every workspace: tabs, panes, who's attached
+Nermalws tree api     # one workspace as a tree
+Nermalpane ls --all   # every pane, including orphans no workspace holds
+Nermalagents          # every coding agent and its status
+Nermalstatus          # server pid, uptime, pane count, build, socket
+Nermalmachine ls      # this machine plus any linked remotes
+Nermalevents          # stream server events until interrupted
 ```
 
 `--json` on any of them, `-q` to suppress success output (errors still print).
@@ -144,8 +144,8 @@ nermal events          # stream server events until interrupted
 ## Remote machines
 
 ```bash
-nermal -m devbox ls
-nermal -m devbox run -- cargo test
+Nermal-m devbox ls
+Nermal-m devbox run -- cargo test
 ```
 
 `-m` routes over a link the local server already holds. It will not dial a fresh

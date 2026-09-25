@@ -4,7 +4,7 @@ description: "An isolated checkout on a fresh branch, in one dialog and one tab.
 ---
 
 Running two agents on the same repository at once means they fight over the
-working tree. A git worktree is the fix, and nermal makes it a single dialog.
+working tree. A git worktree is the fix, and Nermalmakes it a single dialog.
 
 ## Creating one
 
@@ -23,7 +23,7 @@ Each field opens on a suggestion you can accept or type straight over.
   <img src="/images/placeholder.svg" alt="Creating a worktree" />
 </Frame>
 
-Confirm and nermal creates the worktree, opens a tab in it, and starts a shell
+Confirm and Nermalcreates the worktree, opens a tab in it, and starts a shell
 there. The [sidebar](/window/sidebar) files it under the same repository group as
 its parent, on its own branch.
 
@@ -32,10 +32,10 @@ its parent, on its own branch.
 Worktrees land inside the repository, under:
 
 ```
-<repo>/.nermal/worktrees/<name>
+<repo>/.Nermal/worktrees/<name>
 ```
 
-`<repo>/.nermal/.gitignore` is created with `*` in it the first time, so the
+`<repo>/.Nermal/.gitignore` is created with `*` in it the first time, so the
 directory never shows up as an untracked mess in your own repository.
 
 ## Removing one

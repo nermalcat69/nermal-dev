@@ -4,18 +4,18 @@ description: "Native builds for macOS, Windows, and Linux — plus building from
 ---
 
 Every release publishes native builds on
-[**GitHub Releases**](https://github.com/nermalcat69/nermal-ide/releases). There is no
+[**GitHub Releases**](https://github.com/Nermalcat69/Nermal-ide/releases). There is no
 runtime to install first: fonts are embedded in the binary, and the Linux
 AppImage bundles its own X11/Wayland/font libraries.
 
 <Tabs>
   <Tab title="macOS">
-    Download the DMG that matches your Mac and drag **nermal** into Applications.
+    Download the DMG that matches your Mac and drag **Nermal** into Applications.
 
     | Mac | File |
     |---|---|
-    | Apple silicon (M1 and later) | `nermal-<version>-macos-arm64.dmg` |
-    | Intel | `nermal-<version>-macos-x86_64.dmg` |
+    | Apple silicon (M1 and later) | `Nermal-<version>-macos-arm64.dmg` |
+    | Intel | `Nermal-<version>-macos-x86_64.dmg` |
 
     Builds are signed with a Developer ID certificate and notarized by Apple, so
     Gatekeeper opens them without a right-click dance.
@@ -31,23 +31,23 @@ AppImage bundles its own X11/Wayland/font libraries.
 
     | File | Use it when |
     |---|---|
-    | `nermal-<version>-windows-x86_64-setup.exe` | You want a normal install with Start-menu entries and an uninstaller. |
-    | `nermal-<version>-windows-x86_64.zip` | You want it portable — unzip anywhere and run `nermal-app.exe`. |
+    | `Nermal-<version>-windows-x86_64-setup.exe` | You want a normal install with Start-menu entries and an uninstaller. |
+    | `Nermal-<version>-windows-x86_64.zip` | You want it portable — unzip anywhere and run `Nermal-app.exe`. |
 
     The installer offers one optional setup task, off by default: **Add "Open in
-    nermal" to the folder context menu**. It writes shell verbs under `HKCU`, so
+    Nermal" to the folder context menu**. It writes shell verbs under `HKCU`, so
     only your own Windows account is affected, and the uninstaller always takes
     them back out.
 
     A portable install can add or remove the same entries itself:
 
     ```powershell
-    nermal-app.exe --register-explorer-menu
-    nermal-app.exe --unregister-explorer-menu
+    Nermal-app.exe --register-explorer-menu
+    Nermal-app.exe --unregister-explorer-menu
     ```
 
     <Note>
-      The Windows package also carries a Linux `nermal-server` binary so a WSL
+      The Windows package also carries a Linux `Nermal-server` binary so a WSL
       distro can be served locally instead of downloading one. See
       [Remote workspaces](/remote/workspaces).
     </Note>
@@ -56,19 +56,19 @@ AppImage bundles its own X11/Wayland/font libraries.
   <Tab title="Linux">
     | File | Use it when |
     |---|---|
-    | `nermal-<version>-linux-x86_64.AppImage` | Almost always. `chmod +x` and run — the X11, Wayland, xkb, and font libraries are bundled, so it works on Fedora, Arch, Debian and friends, not just Ubuntu. |
-    | `nermal-<version>-linux-x86_64.tar.gz` | You would rather unpack the plain binary and place it yourself. |
+    | `Nermal-<version>-linux-x86_64.AppImage` | Almost always. `chmod +x` and run — the X11, Wayland, xkb, and font libraries are bundled, so it works on Fedora, Arch, Debian and friends, not just Ubuntu. |
+    | `Nermal-<version>-linux-x86_64.tar.gz` | You would rather unpack the plain binary and place it yourself. |
 
     ```bash
-    chmod +x nermal-*-linux-x86_64.AppImage
-    ./nermal-*-linux-x86_64.AppImage
+    chmod +x Nermal-*-linux-x86_64.AppImage
+    ./Nermal-*-linux-x86_64.AppImage
     ```
   </Tab>
 </Tabs>
 
-## The `nermal` command
+## The `Nermal` command
 
-Every installer ships the `nermal` CLI beside the app, and the app puts it on your
+Every installer ships the `Nermal` CLI beside the app, and the app puts it on your
 PATH the first time it launches. That is what lets a script — or a coding agent
 in some other terminal — open panes and read them back.
 
@@ -78,18 +78,18 @@ in some other terminal — open panes and read them back.
 - **On Windows** the install directory is appended to your user PATH, and the
   uninstaller removes it again.
 
-A `nermal` you installed yourself — a `cargo install` build, a package manager's
+A `Nermal` you installed yourself — a `cargo install` build, a package manager's
 copy — is never replaced. To turn the whole thing off, uncheck **Settings →
-Agents → Install the nermal command on PATH**.
+Agents → Install the Nermalcommand on PATH**.
 
 <Tip>
-  Inside a nermal pane the CLI works regardless of PATH, because panes inherit the
+  Inside a Nermalpane the CLI works regardless of PATH, because panes inherit the
   app's environment.
 </Tip>
 
 ## Updating
 
-nermal checks for updates every six hours and can update itself: **Settings →
+Nermalchecks for updates every six hours and can update itself: **Settings →
 About → Check now**, then **Update and relaunch**. Releases are downloaded and
 verified in the background so applying one is just a restart.
 
@@ -100,13 +100,13 @@ switching behaves.
 ## Building from source
 
 You need a stable Rust toolchain. The build is a plain `cargo build`; the app
-binary is `nermal-app`.
+binary is `Nermal-app`.
 
 <Tabs>
   <Tab title="macOS / Windows">
     ```bash
-    git clone https://github.com/nermalcat69/nermal-ide
-    cd nermal
+    git clone https://github.com/Nermalcat69/Nermal-ide
+    cd Nermal
     cargo build --release
     ```
   </Tab>
@@ -135,17 +135,17 @@ binary is `nermal-app`.
 
 <AccordionGroup>
   <Accordion title="macOS">
-    Quit nermal (use **Quit and Stop Server** from the tray menu so the background
+    Quit Nermal(use **Quit and Stop Server** from the tray menu so the background
     server stops too), then drag the app to the Trash. Your settings live in
-    `~/.config/nermal` and are left alone; delete that folder to remove them.
+    `~/.config/Nermal` and are left alone; delete that folder to remove them.
   </Accordion>
   <Accordion title="Windows">
     Use **Add or remove programs**. The uninstaller removes the PATH entry and
     any Explorer context-menu keys it added. Settings live in
-    `%APPDATA%\nermal`.
+    `%APPDATA%\Nermal`.
   </Accordion>
   <Accordion title="Linux">
     Delete the AppImage or the unpacked directory. Settings live in
-    `~/.config/nermal`.
+    `~/.config/Nermal`.
   </Accordion>
 </AccordionGroup>
