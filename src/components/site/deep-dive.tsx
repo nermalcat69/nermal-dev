@@ -15,11 +15,11 @@ export function DeepDive() {
       <Container className="py-16 md:py-[112px]">
         <Reveal>
           <SectionTitle className="sm:text-[52px]">
-            95 ms for an 11 MB cat.
+            Fast where it counts.
           </SectionTitle>
           <Body className="mt-6 max-w-[54ch] text-[var(--contrast-muted)]">
             <p>
-              Same machine, same day, same 155 by 40 grid. Apple M1 Pro, macOS 26.3.1,
+              The built-in terminal, benchmarked: 95 ms for an 11 MB cat. Same machine, same day, same 155 by 40 grid. Apple M1 Pro, macOS 26.3.1,
               five-run averages. Roughly twice the throughput of Alacritty, Ghostty, or
               Kitty on a big cat.
             </p>

@@ -18,13 +18,13 @@ export function Statement() {
       <Container className="relative flex flex-col items-center py-16 text-center md:py-[112px]">
         <Reveal>
           <SectionTitle className="mx-auto items-center">
-            The window does not own your shells.
+            Close the editor. Keep your work running.
           </SectionTitle>
           <Body className="mx-auto mt-5 max-w-[48ch] text-[var(--quiet)]">
             <p>
-              Quitting Nermalcloses the window and leaves the server running. Your build
-              keeps building, your agent keeps working, your SSH session stays up. Open
-              Nermalagain and it reattaches to exactly what was there.
+              Quitting Nermal closes the window, not your terminals. Your build keeps building,
+              your agent keeps working, your SSH session stays up. Reopen the editor and it
+              reattaches to exactly what was there.
             </p>
           </Body>
           <div className="mt-8 flex justify-center">

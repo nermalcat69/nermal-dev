@@ -10,8 +10,9 @@ const columns = [
   {
     title: "Product",
     items: [
-      { label: "Terminal", href: "/#editor" },
+      { label: "Workspaces", href: "/#editor" },
       { label: "Editor", href: links.editor, external: true },
+      { label: "Terminal", href: "/#features" },
       { label: "Git", href: links.git, external: true },
       { label: "Sessions", href: "/#sessions" },
       { label: "CLI", href: links.cli, external: true },
@@ -51,10 +52,10 @@ export function Closing() {
       <Container className="flex flex-col items-center pt-16 text-center md:pt-[112px]">
         <Reveal>
           <SectionTitle className="mx-auto max-w-[14ch] sm:text-[56px]">
-            Your build keeps building.
+            Edit. Run. Keep going.
           </SectionTitle>
           <Body className="mx-auto mt-5 max-w-[40ch] text-[var(--quiet)]">
-            <p>Native builds for macOS, Windows, and Linux.</p>
+            <p>A free, native code editor for macOS, Windows, and Linux.</p>
           </Body>
           <div className="mt-8 flex justify-center">
             <PillLink href={links.releases} tone="dark" external>

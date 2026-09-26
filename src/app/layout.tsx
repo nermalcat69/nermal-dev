@@ -11,7 +11,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Nermal",
   description:
-    "A terminal workbench with a built-in editor: persistent sessions, remote work, and agent support.",
+    "A fast, native code editor and VS Code alternative, with a built-in terminal, git, remote work over SSH, and agent support.",
 };
 
 // The docs render dark only, so this script must not strip `dark` there or the

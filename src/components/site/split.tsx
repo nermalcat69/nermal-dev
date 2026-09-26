@@ -26,7 +26,8 @@ export function Split() {
                 </p>
                 <p className="text-[var(--quiet)]">
                   Open a file and the editor docks beside the terminal, with syntax
-                  highlighting, auto-save, and conflict detection.
+                  highlighting, auto-save, and conflict detection. Every project keeps its
+                  own files, git, and terminals in one workspace.
                 </p>
               </CardCopy>
             </Card>
@@ -45,7 +46,7 @@ export function Split() {
               <CardCopy title="Recognised on sight.">
                 <p className="text-[#a1a1a1]">
                   22 coding CLIs are recognised in the pane, including Claude Code and
-                  Codex. Nermaldoes not wrap them. You get per-pane status, a notification
+                  Codex. Nermal does not wrap them. You get per-pane status, a notification
                   when one needs you, git context on the row, and the session resumes after
                   a reboot.
                 </p>

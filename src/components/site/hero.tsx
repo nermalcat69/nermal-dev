@@ -9,16 +9,16 @@ export function Hero() {
     <section id="top" className="scroll-mt-4 bg-[var(--contrast)] text-[var(--contrast-ink)]">
       <Container className="pt-12 pb-16 md:pt-16 md:pb-[84px]">
         <Reveal>
-          <Eyebrow className="text-[var(--contrast-muted)]">Terminal workbench</Eyebrow>
+          <Eyebrow className="text-[var(--contrast-muted)]">Code editor</Eyebrow>
           <SectionTitle as="h1" size="hero" className="font-normal">
-            <span className="font-medium">A terminal workbench</span>{" "}
-            <span className="text-[var(--contrast-muted)]">with a built-in editor.</span>
+            <span className="font-medium">A fast code editor</span>{" "}
+            <span className="text-[var(--contrast-muted)]">and an alternative to VS Code.</span>
           </SectionTitle>
           <Body className="mt-5 max-w-[48ch] text-[var(--contrast-muted)]">
             <p>
-              Persistent sessions, remote work, and agent support. A background server owns
-              your shells and panes, not the window. Written in Rust, rendered on the GPU
-              through gpui, with Alacritty&apos;s VT core.
+              Editor, terminal, git, and search in one native window. Work over SSH, run coding
+              agents beside your files, and keep sessions alive after you quit. Written in
+              Rust and rendered on the GPU.
             </p>
           </Body>
           <div className="mt-8 flex items-center gap-2">
