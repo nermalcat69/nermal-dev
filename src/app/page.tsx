@@ -2,6 +2,7 @@ import { Closing } from "@/components/site/closing";
 import { DeepDive } from "@/components/site/deep-dive";
 import { Hero } from "@/components/site/hero";
 import { Nav } from "@/components/site/nav";
+import { Features } from "@/components/site/features";
 import { Split } from "@/components/site/split";
 import { Statement } from "@/components/site/statement";
 import { Trust } from "@/components/site/trust";
@@ -18,6 +19,7 @@ export default async function Home() {
           <Hero />
           <Statement />
           <Split />
+          <Features />
           <Trust stats={stats} />
           <DeepDive />
           <Closing />
