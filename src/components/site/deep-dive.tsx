@@ -110,10 +110,10 @@ export function DeepDive() {
 
         <Reveal className="mt-14 md:mt-16">
           <Image
-            src="/hero.webp"
-            alt="The Nermalworkbench, GPU-rendered, with a persistent sidebar of panes"
-            width={1470}
-            height={956}
+            src="/v0/window-dark.png"
+            alt="Nermal in dark mode running Claude Code beside a git sidebar"
+            width={2940}
+            height={1846}
             loading="lazy"
             sizes="(min-width: 1080px) 1016px, 100vw"
             className="h-auto w-full rounded-[14px] ring-1 ring-white/10"

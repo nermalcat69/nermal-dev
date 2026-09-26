@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { ArchitectureSketch } from "@/components/site/sketch";
 import { Reveal } from "@/components/site/reveal";
 import { Card, CardCopy, CardMedia, Container, EqualGrid } from "@/components/site/surface";
 
@@ -10,8 +9,14 @@ export function Split() {
         <EqualGrid>
           <Reveal>
             <Card tone="light" id="workspace">
-              <CardMedia>
-                <ArchitectureSketch className="absolute inset-0 h-full w-full text-[#2a2a2a]" />
+              <CardMedia className="overflow-hidden rounded-[10px] ring-1 ring-black/10">
+                <Image
+                  src="/v0/workspaces.png"
+                  alt="Workspace switcher listing workspaces and their tabs"
+                  fill
+                  sizes="(min-width: 768px) 500px, 100vw"
+                  className="object-cover object-left-top"
+                />
               </CardMedia>
               <CardCopy title="Workspace, tab, pane.">
                 <p className="text-[var(--quiet)]">
@@ -30,11 +35,11 @@ export function Split() {
             <Card tone="dark" id="agents">
               <CardMedia className="overflow-hidden rounded-[10px] ring-1 ring-white/10">
                 <Image
-                  src="/hero.webp"
-                  alt="Nermalshowing a sidebar of agent sessions across several repositories"
+                  src="/v0/instances.png"
+                  alt="Terminal instances list with per-pane memory"
                   fill
                   sizes="(min-width: 768px) 500px, 100vw"
-                  className="object-cover object-left"
+                  className="object-cover object-left-top"
                 />
               </CardMedia>
               <CardCopy title="Recognised on sight.">

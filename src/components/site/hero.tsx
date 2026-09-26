@@ -37,10 +37,10 @@ export function Hero() {
               className="pointer-events-none absolute top-1/2 left-1/2 h-[88%] w-[92%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.2),transparent_70%)]"
             />
             <Image
-              src="/hero.webp"
-              alt="Nermalshowing a sidebar of agent sessions across several repositories"
-              width={1470}
-              height={956}
+              src="/v0/image1.png"
+              alt="Nermal workbench with file tree, editor, terminal and side panel"
+              width={2940}
+              height={1820}
               priority
               loading="eager"
               fetchPriority="high"
