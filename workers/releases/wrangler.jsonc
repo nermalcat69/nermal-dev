@@ -1,0 +1,12 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "nermal-releases",
+  "main": "index.ts",
+  "compatibility_date": "2026-09-24",
+  // Nermal.dev must be a zone on this Cloudflare account
+  "routes": [{ "pattern": "dl.nermal.dev", "custom_domain": true }],
+  "r2_buckets": [{ "binding": "BUCKET", "bucket_name": "nermal-releases" }],
+  "triggers": { "crons": ["*/10 * * * *"] },
+  "vars": { "REPO": "nermalcat69/nermal-ide" },
+  "observability": { "enabled": true }
+}

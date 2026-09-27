@@ -1,6 +1,7 @@
 export const links = {
   repo: "https://github.com/Nermalcat69/Nermal-ide",
   releases: "https://github.com/Nermalcat69/Nermal-ide/releases",
+  downloads: "https://dl.nermal.dev",
   license: "https://github.com/Nermalcat69/Nermal-ide/blob/main/LICENSE",
   changelog: "https://github.com/Nermalcat69/Nermal-ide/blob/main/CHANGELOG.md",
   issues: "https://github.com/Nermalcat69/Nermal-ide/issues",
@@ -68,17 +69,7 @@ export type Sponsor = {
   icon?: string;
 };
 
-export const sponsors: Sponsor[] = [
-  // PLACEHOLDERS — replace with real sponsors, then delete this note.
-  { name: "Northwind", src: "/sponsors/northwind.svg", href: "https://example.com/northwind", tier: "backer" },
-  { name: "Contour", src: "/sponsors/contour.svg", href: "https://example.com/contour", tier: "partner" },
-  { name: "Atoll", src: "/sponsors/atoll.svg", href: "https://example.com/atoll", tier: "goodies" },
-  { name: "Basalt", src: "/sponsors/basalt.svg", href: "https://example.com/basalt", tier: "goodies" },
-  { name: "Cinder", src: "/sponsors/cinder.svg", href: "https://example.com/cinder", tier: "goodies" },
-  { name: "Dune", src: "/sponsors/dune.svg", href: "https://example.com/dune", tier: "goodies" },
-  { name: "Ember", src: "/sponsors/ember.svg", href: "https://example.com/ember", tier: "goodies" },
-  { name: "Fjord", src: "/sponsors/fjord.svg", href: "https://example.com/fjord", tier: "goodies" },
-];
+export const sponsors: Sponsor[] = [];
 
 /**
  * Tier order and labels for the docs rail. Tier order is the order here, so

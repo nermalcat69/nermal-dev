@@ -16,17 +16,28 @@ const platforms = [
   {
     name: "macOS",
     note: "Apple silicon and Intel. Signed and notarized. macOS 14 or later.",
-    files: ["DMG (arm64)", "DMG (x86_64)"],
+    files: [
+      { label: "Apple silicon (.dmg)", file: "nermal-macos-arm64.dmg" },
+      { label: "Intel (.dmg)", file: "nermal-macos-x86_64.dmg" },
+      { label: "Apple silicon (.zip)", file: "nermal-macos-arm64.zip" },
+      { label: "Intel (.zip)", file: "nermal-macos-x86_64.zip" },
+    ],
   },
   {
     name: "Windows",
     note: "x86-64. A regular installer, or a portable zip.",
-    files: ["Setup .exe", "Portable .zip"],
+    files: [
+      { label: "Installer (.exe)", file: "nermal-windows-x86_64-setup.exe" },
+      { label: "Portable (.zip)", file: "nermal-windows-x86_64.zip" },
+    ],
   },
   {
     name: "Linux",
     note: "x86-64. The AppImage bundles its own X11, Wayland, and font libraries.",
-    files: ["AppImage", "tar.gz"],
+    files: [
+      { label: "AppImage", file: "nermal-linux-x86_64.AppImage" },
+      { label: "Archive (.tar.gz)", file: "nermal-linux-x86_64.tar.gz" },
+    ],
   },
 ] as const;
 
@@ -46,7 +57,7 @@ export default function Download() {
                 </SectionTitle>
                 <Body className="mt-5 max-w-[48ch] text-[var(--contrast-muted)]">
                   <p>
-                    Every release publishes native builds on GitHub. There is no runtime to
+                    Every release is mirrored to Cloudflare for fast downloads. There is no runtime to
                     install first.
                   </p>
                 </Body>
@@ -75,16 +86,13 @@ export default function Download() {
                         <Body className="text-[#a1a1a1]">
                           <p>{platform.note}</p>
                         </Body>
-                        <ul className="mt-5 space-y-1.5 text-[13px] text-[#a1a1a1]">
-                          {platform.files.map((file) => (
-                            <li key={file}>{file}</li>
-                          ))}
-                        </ul>
                       </div>
-                      <div className="px-6 pt-8 pb-8 sm:px-8">
-                        <PillLink href={links.releases} tone="light" external>
-                          Download
-                        </PillLink>
+                      <div className="flex flex-col items-start gap-2 px-6 pt-8 pb-8 sm:px-8">
+                        {platform.files.map(({ label, file }, i) => (
+                          <PillLink key={file} href={`${links.downloads}/stable/${file}`} tone={i === 0 ? "light" : "ghost"}>
+                            {label}
+                          </PillLink>
+                        ))}
                       </div>
                     </Card>
                   ))}
